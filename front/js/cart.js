@@ -19,7 +19,7 @@ else {
     afficher_panier();
     panierSelection = [];
     
-
+    
     function afficher_panier() {
 
     for (i = 0; i < tableauLocalStorage.length; i++) {
@@ -31,6 +31,10 @@ else {
             })
             .then((resultProduct) => {
                 console.log(resultProduct);
+
+                // Alimenter le tableau des prix
+                prixProduits.push("products");
+                console.log(prixProduits);
 
                 let monHtml = "";
                 const j = resultProduct.length;
@@ -64,6 +68,8 @@ else {
                 productPanier.innerHTML += panierSelection;
 
             });
+
+            
         }
     }
 }
