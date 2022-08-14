@@ -3,7 +3,6 @@ const tableauLocalStorage = JSON.parse(localStorage.getItem("products"));
 console.table(tableauLocalStorage);
 
 
-
 // Affichage des produits du local storage
 const productPanier = document.querySelector("#cart__items");
 console.log(productPanier);
@@ -18,6 +17,8 @@ else {
 
     prixProduits = [];
     afficher_panier();
+    panierSelection = [];
+    
 
     function afficher_panier() {
 
@@ -31,13 +32,46 @@ else {
             .then((resultProduct) => {
                 console.log(resultProduct);
 
-            })
+                let monHtml = "";
+                const j = resultProduct.length;
+                for (i = 0; i < j; i++) {
 
+                html +=
 
+                    `<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+                        <div class="cart__item__img">
+                            <img src="${resultProduct[i].imageUrl}" alt="${resultProduct[i].altTxt}">
+                        </div>
+                        <div class="cart__item__content">
+                             <div class="cart__item__content__description">
+                                <h2>${resultProduct[i].name}</h2>
+                                <p>${resultProduct[i].myColorValue}</p>
+                                <p>${resultProduct[i].price} €</p>
+                            </div>
+                            <div class="cart__item__content__settings">
+                                <div class="cart__item__content__settings__quantity">
+                                    <p>Qté : </p>
+                                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value=" ${resultProduct[i].quantity}">
+                                </div>
+                                <div class="cart__item__content__settings__delete">
+                                    <p class="deleteItem">Supprimer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>`;
+                }
+
+                productPanier.innerHTML += panierSelection;
+
+            });
         }
     }
-
 }
+
+
+    
+
+
 
         
 
