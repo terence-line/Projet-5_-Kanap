@@ -8,6 +8,7 @@ const productPanier = document.querySelector("#cart__items");
 console.log(productPanier);
 
 
+
 // Vérification du contenu du panier : si le panier est vide
 if (tableauLocalStorage === null || tableauLocalStorage == 0) {
     alert("Votre panier est  vide");
@@ -20,7 +21,11 @@ else {
     panierSelection = [];
     
     
+
+    
+    
     function afficher_panier() {
+        
 
     for (i = 0; i < tableauLocalStorage.length; i++) {
 
@@ -32,10 +37,7 @@ else {
             .then((resultProduct) => {
                 console.log(resultProduct);
 
-                // Alimenter le tableau des prix
-                prixProduits.push("products");
-                console.log(prixProduits);
-
+                
                 let monHtml = "";
                 const j = resultProduct.length;
                 for (i = 0; i < j; i++) {
@@ -68,9 +70,13 @@ else {
                 productPanier.innerHTML += panierSelection;
 
             });
+            // Alimenter le tableau des prix
+            prixProduits.push("products");
+            console.log(prixProduits);
 
-            
         }
+
+        
     }
 }
 
