@@ -2,13 +2,12 @@
 const tableauLocalStorage = JSON.parse(localStorage.getItem("products"));
 console.table(tableauLocalStorage);
 
-prixProduits = [];
+
 
 // Affichage des produits du local storage
 const productPanier = document.querySelector("#cart__items");
 console.log(productPanier);
 
-let panierSelection = [];
 
 // Vérification du contenu du panier : si le panier est vide
 if (tableauLocalStorage === null || tableauLocalStorage == 0) {
@@ -17,10 +16,43 @@ if (tableauLocalStorage === null || tableauLocalStorage == 0) {
 // Si le panier est plein, afficher les produits
 else {
 
-    
-    
+    prixProduits = [];
+    afficher_panier();
+
+    function afficher_panier() {
+
     for (i = 0; i < tableauLocalStorage.length; i++) {
-        //console.log(tableauLocalStorage.length);
+
+        fetch(`http://localhost:3000/api/products/${(tableauLocalStorage[i].id)}`)
+            //console.log(tableauLocalStorage[i].id)
+            .then((response) => {
+                return response.json();
+            })
+            .then((resultProduct) => {
+                console.log(resultProduct);
+
+            })
+
+
+        }
+    }
+
+}
+
+        
+
+
+
+
+    
+
+/*prixProduits = [];
+
+
+let panierSelection = [];
+
+    for (i = 0; i < tableauLocalStorage.length; i++) {
+        
         panierSelection = panierSelection +
 
             `<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
@@ -53,6 +85,4 @@ else {
     // Alimenter le tableau des prix
     prixProduits.push("products");
     console.log(prixProduits);
-}
-
-
+}*/
