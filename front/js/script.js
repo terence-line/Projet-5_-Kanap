@@ -1,5 +1,3 @@
-console.log(window.location);
-
 fetch('http://localhost:3000/api/products')
     .then((response) => {
         return response.json();
@@ -18,8 +16,6 @@ fetch('http://localhost:3000/api/products')
             </article>
           </a>`;
         }
-
-        console.log(result);
 
         document.querySelector("#items").innerHTML = html;
 

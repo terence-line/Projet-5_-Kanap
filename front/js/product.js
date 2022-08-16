@@ -20,7 +20,6 @@ function afficher_produit() {
         })
         .then((resultApi) => {
             // Affichage du produit dans la console.
-            console.table(resultApi);
 
             let elementImage = document.querySelector(".item__img");
 
