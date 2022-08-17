@@ -154,6 +154,25 @@ else {
         }
 
     }); 
+
+    // Fonction pour calculer la quantité totale du panier
+    function calculTotalQuantity() {
+        // Déclaration de la variable représentant le total quantité.
+        let totalQuantity = 0;
+        let cart = products;
+        // Boucle pour calculer la quantité globale.
+        for (let number of cart) {
+            let productsInCart = number.quantity;
+            // Calcul total produits dans le panier.
+            totalQuantity += productsInCart++;
+        }
+    
+        document.getElementById("totalQuantity").innerHTML = totalQuantity;
+    }
+    
+       calculTotalQuantity();
+       
+
+
     
 }
-            
