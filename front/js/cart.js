@@ -1,11 +1,10 @@
 // Récupération des produits contenus dans le local storage
 const products = JSON.parse(localStorage.getItem("products"));
-//console.table(products);
+console.table(products);
 
 
 // Déclaration de variable
 let cartItems = document.getElementById("cart__items");
-
 
 
 // Vérification du contenu du panier : si le panier est vide
@@ -31,6 +30,7 @@ else {
 
                 return response.json();
 
+
             }).then((result)=>{
 
                     product.altTxt = result.altTxt;
@@ -42,6 +42,7 @@ else {
                     product.name = result.name;
 
                     return resolve(product);
+                    
 
                 });
 
@@ -50,7 +51,10 @@ else {
     }
 
     /* La méthode Promise.all()renvoit une promesse ( Promise) qui est résolue 
-    lorsque l'ensemble des promesses retenues dans l'itérable passé en argument ont été résolues.*/ 
+    lorsque l'ensemble des promesses retenues dans l'itérable passé en argument ont été résolues.
+    
+    La méthode map() crée un nouveau tableau avec les résultats de l'appel d'une fonction fournie 
+    sur chaque élément du tableau appelant.*/ 
 
     Promise.all(products.map(getPrice)).then((result)=>{
 
@@ -152,27 +156,54 @@ else {
             pDeleteItem.textContent = "Supprimer";
         
         }
+       
 
     }); 
 
     // Fonction pour calculer la quantité totale du panier
     function calculTotalQuantity() {
+
         // Déclaration de la variable représentant le total quantité.
         let totalQuantity = 0;
         let cart = products;
+        
         // Boucle pour calculer la quantité globale.
         for (let number of cart) {
             let productsInCart = number.quantity;
+
             // Calcul total produits dans le panier.
             totalQuantity += productsInCart++;
         }
     
-        document.getElementById("totalQuantity").innerHTML = totalQuantity;
+        document.getElementById("totalQuantity").textContent = totalQuantity;
     }
     
        calculTotalQuantity();
+
+
+    // Fonction pour calculer le prix total du panier
+    function calculTotalPrice() {
+
+        // Déclaration de la variable représentant le total du prix.
+        let totalPrice = 0;
+        const result = products.price;
        
+        // Boucle pour calculer le prix total du panier.
+        for (let products in result) {
+      
+            products.price = result.price;
 
+            totalPrice += totalQuantity * result.price;
 
-    
+        }
+
+        document.getElementById("totalPrice").textContent = totalPrice;
+
+    }
+
+    calculTotalPrice();
+
 }
+
+   
+
