@@ -1,4 +1,4 @@
-// Appel des produits avec l'id via fetch
+/*// Appel des produits avec l'id via fetch
 async function getProducts(id) {
     return fetch(`http://localhost:3000/api/products/${id}`)
     .then (response => response.json())
@@ -19,7 +19,7 @@ async function main() {
     // Si le panier est plein, afficher les produits
     else {
         let prices = [];
-
+        // Récupération des prix et des quantités
         for (x of products) {
             let product = await getProducts(x.id)
             let addProduct = {
@@ -30,6 +30,8 @@ async function main() {
         
             displayCard(x, product);
             console.log(product);
+            
+
         }
         calculTotalPrice(prices);
         calculTotalQuantity(products);
@@ -108,6 +110,7 @@ async function main() {
         inputQuantity.setAttribute("min", "1");
         inputQuantity.setAttribute("max", "100");
         inputQuantity.setAttribute("name", "itemQuantity");
+        
 
         // Ajout de la div cart__item__content__settings__delete
         let divCartItemsDelete = document.createElement("div");
@@ -149,6 +152,72 @@ async function main() {
             }
             document.getElementById("totalPrice").textContent = totalPrice;
         }
+//**********************************************************************************
+    
+        // Fonction pour modifier une quantité
+        let cart = products;
+        let itemQuantity = document.querySelectorAll(".itemQuantity");
+        console.log(itemQuantity);
+        
+        function changeQuantity() {
+            addEventListener("click", (itemQuantity) => {
+             
+            console.log(itemQuantity);
+                let foudProduct = cart.find(p => p.id == cart.id);
+                if (foudProduct != undefined) {
+                    
+                    foudProduct.quantity += quantity;
+                }    
+                console.log(foudProduct);
+            }); 
+                
+        }
        
-}    
-main();
+        changeQuantity();
+       
+       
+       /* //Fonction pour supprimer les articles
+        function deleteArticle() {
+            let deleteProduct = document.querySelectorAll(".deleteItem");
+                
+               
+        }
+        
+        
+        deleteArticle(); 
+        
+}        
+main();*/
+
+const products = JSON.parse(localStorage.getItem("products"));
+
+function getPrice(product) {
+
+    return new Promise((resolve) => {
+
+        fetch(`http://localhost:3000/api/products/${product.id}`).then((response) => {
+
+            return response.json();
+
+        }).then((result) => {
+
+            product.altTxt = result.altTxt;
+
+            product.imageUrl = result.imageUrl;
+
+            product.price = result.price;
+
+            return resolve(product);
+
+        });
+
+    });
+
+}
+
+Promise.all(products.map(getPrice)).then((result) => {
+
+    // Ici tu ecris ton code
+
+});
+
