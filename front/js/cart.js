@@ -161,6 +161,7 @@ else {
 
             itemToDelete.closest(".cart__item").remove();
 
+            // Mise à jour de la quantité et du prix après suppression d'un produit
             totalQuantityNode.textContent = getTotalQuantity(result);
     
             totalPriceNode.textContent = getTotalPrice(result);
@@ -184,7 +185,20 @@ else {
 
             products[updateIndex] = kanapProduct;
 
-          
+            result.splice(updateIndex, 0);
+
+            let localStorageCard = JSON.parse(localStorage.getItem("products"));
+
+            localStorageCard.splice(updateIndex, 0);
+
+            localStorage.setItem("products", JSON.stringify(localStorageCard));
+
+            input.closest(".cart__item");
+
+            // Mise à jour de la quantité et du prix après changement de quantité
+            totalQuantityNode.textContent = getTotalQuantity(result);
+            
+            totalPriceNode.textContent = getTotalPrice(result); 
         
         }
 
