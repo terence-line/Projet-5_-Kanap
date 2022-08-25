@@ -290,6 +290,33 @@ else {
             addressErrorMsg.innerHTML = "Saisie incorrecte";
         }
     };
+
+    //****  Ville ****** 
+
+    // Ecouter la modification pour la ville
+    form.city.addEventListener("change", function () {
+        validCity(this);
+    });
+
+    // Fonction pour la validation de la ville
+    const validCity = function (inputCity) {
+
+        // Création de la reg exp pour la validation de la ville
+        let cityRegex = new RegExp("^([a-zA-Z,éêèàëÉÈÊË.'-]+[ ]?){3,}$", 'g');
+
+        // Variable pour le test
+        let testcity = cityRegex.test(inputCity.value);
+
+        // Variable pour attraper la balise suivante
+        let cityErrorMsg = inputCity.nextElementSibling;
+
+        if (testcity == true) {
+            cityErrorMsg.innerHTML = "";
+        }
+        else {
+            cityErrorMsg.innerHTML = "Saisie incorrecte";
+        }
+    };
 }
    
     
