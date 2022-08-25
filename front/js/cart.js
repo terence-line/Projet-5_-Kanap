@@ -208,6 +208,9 @@ else {
 
     // Création de la variable qui englobe le formulaire
     let form = document.querySelector(".cart__order__form");
+
+
+    //****  Prénom  ****** 
     
     // Ecouter la modification pour le prénom
     form.firstName.addEventListener("change", function () {
@@ -231,6 +234,33 @@ else {
         }   
         else {
             firstNameErrorMsg.innerHTML = "Saisie incorrecte";
+        }
+    };
+
+    //****  Nom ****** 
+
+    // Ecouter la modification pour le prénom
+    form.lastName.addEventListener("change", function () {
+        validLastName(this);
+    });
+
+    // Fonction pour la validation du prénom
+    const validLastName = function (inputLastName) {
+
+        // Création de la reg exp pour la validation du prénom
+        let lastNameRegex = new RegExp('^[a-zA-Z-]+$', 'g');
+
+        // Variable pour le test
+        let testLastName = lastNameRegex.test(inputLastName.value);
+
+        // Variable pour attraper la balise suivante
+        let lastNameErrorMsg = inputLastName.nextElementSibling;
+
+        if (testLastName == true) {
+            lastNameErrorMsg.innerHTML = "";
+        }
+        else {
+            lastNameErrorMsg.innerHTML = "Saisie incorrecte";
         }
     };
 }
