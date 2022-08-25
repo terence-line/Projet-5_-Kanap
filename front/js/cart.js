@@ -317,6 +317,33 @@ else {
             cityErrorMsg.innerHTML = "Saisie incorrecte";
         }
     };
+
+    //****  Email ****** 
+
+    // Ecouter la modification pour le mail
+    form.email.addEventListener("change", function () {
+        validEmail(this);
+    });
+
+    // Fonction pour la validation du mail
+    const validEmail = function (inputEmail) {
+
+        // Création de la reg exp pour la validation du mail
+        let emailRegex = new RegExp('^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$', 'g');
+
+        // Variable pour le test
+        let testemail = emailRegex.test(inputEmail.value);
+
+        // Variable pour attraper la balise suivante
+        let emailErrorMsg = inputEmail.nextElementSibling;
+
+        if (testemail == true) {
+            emailErrorMsg.innerHTML = "";
+        }
+        else {
+            emailErrorMsg.innerHTML = "Saisie incorrecte";
+        }
+    };
 }
    
     
