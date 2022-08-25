@@ -203,4 +203,45 @@ else {
         }
 
     });
+
+    // ************************* Formulaire ********************** 
+
+    // Création de la variable qui englobe le formulaire
+    let form = document.querySelector(".cart__order__form");
+    
+    // Ecouter la modification pour le prénom
+    form.firstName.addEventListener("change", function () {
+        validFirstName(this);
+    });
+
+    // Fonction pour la validation du prénom
+    const  validFirstName = function (inputFirstName) {
+
+        // Création de la reg exp pour la validation du prénom
+        let firstNameRegex = new RegExp('^[a-zA-Z-]+$', 'g');
+
+        // Variable pour le test
+        let testFirstName = firstNameRegex.test(inputFirstName.value);
+
+        // Variable pour attraper la balise suivante
+        let firstNameErrorMsg = inputFirstName.nextElementSibling;
+
+        if (testFirstName == true) {
+            firstNameErrorMsg.innerHTML = "";
+        }   
+        else {
+            firstNameErrorMsg.innerHTML = "Saisie incorrecte";
+        }
+    };
 }
+   
+    
+
+    
+
+
+
+   
+  
+
+
