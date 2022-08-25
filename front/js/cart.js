@@ -221,7 +221,7 @@ else {
     const  validFirstName = function (inputFirstName) {
 
         // Création de la reg exp pour la validation du prénom
-        let firstNameRegex = new RegExp('^[a-zA-Z-]+$', 'g');
+        let firstNameRegex = new RegExp("^([a-zA-Z,éêèàëÉÈÊË.'-]+[ ]?){3,}$", 'g');
 
         // Variable pour le test
         let testFirstName = firstNameRegex.test(inputFirstName.value);
@@ -239,16 +239,16 @@ else {
 
     //****  Nom ****** 
 
-    // Ecouter la modification pour le prénom
+    // Ecouter la modification pour le nom
     form.lastName.addEventListener("change", function () {
         validLastName(this);
     });
 
-    // Fonction pour la validation du prénom
+    // Fonction pour la validation du nom
     const validLastName = function (inputLastName) {
 
-        // Création de la reg exp pour la validation du prénom
-        let lastNameRegex = new RegExp('^[a-zA-Z-]+$', 'g');
+        // Création de la reg exp pour la validation du nom
+        let lastNameRegex = new RegExp("^([a-zA-Z,éêèàëÉÈÊË.'-]+[ ]?){3,}$", 'g');
 
         // Variable pour le test
         let testLastName = lastNameRegex.test(inputLastName.value);
@@ -261,6 +261,33 @@ else {
         }
         else {
             lastNameErrorMsg.innerHTML = "Saisie incorrecte";
+        }
+    };
+
+    //****  Adresse ****** 
+
+    // Ecouter la modification pour l'adresse
+    form.address.addEventListener("change", function () {
+        validAddress(this);
+    });
+
+    // Fonction pour la validation de l'adresse
+    const validAddress = function (inputAddress) {
+
+        // Création de la reg exp pour la validation de l'adresse
+        let addressRegex = new RegExp('^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+', 'g');
+
+        // Variable pour le test
+        let testaddress = addressRegex.test(inputAddress.value);
+
+        // Variable pour attraper la balise suivante
+        let addressErrorMsg = inputAddress.nextElementSibling;
+
+        if (testaddress == true) {
+            addressErrorMsg.innerHTML = "";
+        }
+        else {
+            addressErrorMsg.innerHTML = "Saisie incorrecte";
         }
     };
 }
