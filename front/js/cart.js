@@ -341,7 +341,7 @@ else {
             emailErrorMsg.innerHTML = "";
         }
         else {
-            emailErrorMsg.innerHTML = "Saisie incorrecte";
+            emailErrorMsg.innerHTML = "Adresse mail non valide";
         }
     };
 }
