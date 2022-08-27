@@ -204,147 +204,181 @@ else {
 
     });
 
-    // ************************* Formulaire ********************** 
-
-    // Création de la variable qui englobe le formulaire
-    let form = document.querySelector(".cart__order__form");
-
-
-    //****  Prénom  ****** 
-    
-    // Ecouter la modification pour le prénom
-    form.firstName.addEventListener("change", function () {
-        validFirstName(this);
-    });
-
-    // Fonction pour la validation du prénom
-    const  validFirstName = function (inputFirstName) {
-
-        // Création de la reg exp pour la validation du prénom
-        let firstNameRegex = new RegExp("^([a-zA-Z,éêèàëÉÈÊË.'-]+[ ]?){3,}$", 'g');
-
-        // Variable pour le test
-        let testFirstName = firstNameRegex.test(inputFirstName.value);
-
-        // Variable pour attraper la balise suivante
-        let firstNameErrorMsg = inputFirstName.nextElementSibling;
-
-        if (testFirstName == true) {
-            firstNameErrorMsg.innerHTML = "";
-        }   
-        else {
-            firstNameErrorMsg.innerHTML = "Saisie incorrecte";
-        }
-    };
-
-    //****  Nom ****** 
-
-    // Ecouter la modification pour le nom
-    form.lastName.addEventListener("change", function () {
-        validLastName(this);
-    });
-
-    // Fonction pour la validation du nom
-    const validLastName = function (inputLastName) {
-
-        // Création de la reg exp pour la validation du nom
-        let lastNameRegex = new RegExp("^([a-zA-Z,éêèàëÉÈÊË.'-]+[ ]?){3,}$", 'g');
-
-        // Variable pour le test
-        let testLastName = lastNameRegex.test(inputLastName.value);
-
-        // Variable pour attraper la balise suivante
-        let lastNameErrorMsg = inputLastName.nextElementSibling;
-
-        if (testLastName == true) {
-            lastNameErrorMsg.innerHTML = "";
-        }
-        else {
-            lastNameErrorMsg.innerHTML = "Saisie incorrecte";
-        }
-    };
-
-    //****  Adresse ****** 
-
-    // Ecouter la modification pour l'adresse
-    form.address.addEventListener("change", function () {
-        validAddress(this);
-    });
-
-    // Fonction pour la validation de l'adresse
-    const validAddress = function (inputAddress) {
-
-        // Création de la reg exp pour la validation de l'adresse
-        let addressRegex = new RegExp('^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+', 'g');
-
-        // Variable pour le test
-        let testaddress = addressRegex.test(inputAddress.value);
-
-        // Variable pour attraper la balise suivante
-        let addressErrorMsg = inputAddress.nextElementSibling;
-
-        if (testaddress == true) {
-            addressErrorMsg.innerHTML = "";
-        }
-        else {
-            addressErrorMsg.innerHTML = "Saisie incorrecte";
-        }
-    };
-
-    //****  Ville ****** 
-
-    // Ecouter la modification pour la ville
-    form.city.addEventListener("change", function () {
-        validCity(this);
-    });
-
-    // Fonction pour la validation de la ville
-    const validCity = function (inputCity) {
-
-        // Création de la reg exp pour la validation de la ville
-        let cityRegex = new RegExp("^([a-zA-Z,éêèàëÉÈÊË.'-]+[ ]?){3,}$", 'g');
-
-        // Variable pour le test
-        let testcity = cityRegex.test(inputCity.value);
-
-        // Variable pour attraper la balise suivante
-        let cityErrorMsg = inputCity.nextElementSibling;
-
-        if (testcity == true) {
-            cityErrorMsg.innerHTML = "";
-        }
-        else {
-            cityErrorMsg.innerHTML = "Saisie incorrecte";
-        }
-    };
-
-    //****  Email ****** 
-
-    // Ecouter la modification pour le mail
-    form.email.addEventListener("change", function () {
-        validEmail(this);
-    });
-
-    // Fonction pour la validation du mail
-    const validEmail = function (inputEmail) {
-
-        // Création de la reg exp pour la validation du mail
-        let emailRegex = new RegExp('^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$', 'g');
-
-        // Variable pour le test
-        let testemail = emailRegex.test(inputEmail.value);
-
-        // Variable pour attraper la balise suivante
-        let emailErrorMsg = inputEmail.nextElementSibling;
-
-        if (testemail == true) {
-            emailErrorMsg.innerHTML = "";
-        }
-        else {
-            emailErrorMsg.innerHTML = "Adresse mail non valide";
-        }
-    };
 }
+
+
+// ************************* Formulaire ********************** 
+
+
+// Création de la constante qui englobe le formulaire
+const form = document.querySelector(".cart__order__form");
+
+// Récupération de l'id des inputs du formulaire que l'on va stocker dans des constantes
+const firstName = document.getElementById("firstName");
+const lastName = document.getElementById("lastName");
+const address = document.getElementById("address");
+const  city = document.getElementById("city");
+const email = document.getElementById("email");
+
+// Création des variables qui vont contenir la saisie de l'utilisateur
+let valueFirstName;
+let valueLastName;
+let valueAddress;
+let valueCity;
+let valueEmail;
+   
+
+// Ecoute de l'input du prénom avec une fonction et des conditions
+firstName.addEventListener("input", function (e) {
+    valueFirstName;
+    if(e.target.value.length == 0) {
+        firstNameErrorMsg.innerHTML = "";
+        valueFirstName = null;
+        console.log(valueFirstName);
+    }
+    // Test 1 Message d'erreur
+    else if(e.target.value.length < 2 || e.target.value.length > 50) {
+        firstNameErrorMsg.innerHTML = "Le prénom doit contenir entre 2 et 50 caractères.";
+        valueFirstName = null;
+    }
+    if(e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/)) {
+        firstNameErrorMsg.innerHTML = "";
+        valueFirstName = e.target.value;
+        console.log(valueFirstName);
+    }
+     // Test 2 message d'erreur
+    if (
+        !e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/) &&
+        e.target.value.length > 2 &&
+        e.target.value.length < 50
+    ) {
+        firstNameErrorMsg.innerHTML = "Le prénom ne peut contenir ni caractère spécial ni chiffre.";
+        valueFirstName = null;
+    }    
+});
+
+// Ecoute de l'input du nom avec une fonction et des conditions
+lastName.addEventListener("input", function (e) {
+    valueLastName;
+    if (e.target.value.length == 0) {
+        lastNameErrorMsg.innerHTML = "";
+        valueLastName = null;
+        console.log(valueLastName);
+    }
+    // Test 1 Message d'erreur
+    else if (e.target.value.length < 2 || e.target.value.length > 50) {
+        lastNameErrorMsg.innerHTML = "Le nom doit contenir entre 2 et 50 caractères.";
+        valueLasttName = null;
+    }
+    if (e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/)) {
+        lastNameErrorMsg.innerHTML = "";
+        valueLastName = e.target.value;
+        console.log(valueLastName);
+    }
+    // Test 2 message d'erreur
+    if (
+        !e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/) &&
+        e.target.value.length > 2 &&
+        e.target.value.length < 50
+    ) {
+        lastNameErrorMsg.innerHTML = "Le nom ne peut contenir ni caractère spécial ni chiffre.";
+        valueLastName = null;
+    }
+});
+
+// Ecoute de l'input de l'adresse avec une fonction et des conditions
+address.addEventListener("input", function (e) {
+    valueAddress;
+    if (e.target.value.length == 0) {
+        addressErrorMsg.innerHTML = "";
+        valueAddress = null;
+        console.log(valueAddress);
+    }
+    // Test 1 Message d'erreur
+    else if (e.target.value.length < 2 || e.target.value.length > 100) {
+        addressErrorMsg.innerHTML = "L'adresse doit contenir entre 2 et 100 caractères.";
+        valueAddress = null;
+    }
+
+    if (e.target.value.match(/^[a-z A-Z 0-9,çéêèàîïëÉÈÊË-]{2,100}$/)) {
+        addressErrorMsg.innerHTML = "";
+        valueAddress = e.target.value;
+        console.log(valueAddress);
+    }
+    // Test 2 message d'erreur
+    if (
+        !e.target.value.match(/^[a-z A-Z 0-9,çéêèàîïëÉÈÊË-]{2,100}$/) &&
+        e.target.value.length > 2 &&
+        e.target.value.length < 100
+    ) {
+        addressErrorMsg.innerHTML = "L'adresse ne peut contenir de caractère spécial.";
+        valueAddress = null;
+    }
+});
+
+// Ecoute de l'input de la ville avec une fonction et des conditions
+city.addEventListener("input", function (e) {
+    valueCity;
+    if (e.target.value.length == 0) {
+        cityErrorMsg.innerHTML = "";
+        valueCity = null;
+        console.log(valueCity);
+    }
+    // Test 1 Message d'erreur
+    else if (e.target.value.length < 2 || e.target.value.length > 50) {
+        cityErrorMsg.innerHTML = "La ville doit contenir entre 2 et 50 caractères.";
+        valueCity = null;
+    }
+
+    if (e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/)) {
+        cityErrorMsg.innerHTML = "";
+        valueCity = e.target.value;
+        console.log(valueCity);
+    }
+    // Test 2 message d'erreur
+    if (
+        !e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/) &&
+        e.target.value.length > 2 &&
+        e.target.value.length < 50
+    ) {
+        cityErrorMsg.innerHTML = "La ville ne peut contenir ni caractère spécial ni chiffre.";
+        valueLastName = null;
+    }
+});
+
+// Ecoute de l'input de l'email avec une fonction et des conditions
+email.addEventListener("input", (e) => {
+    if (e.target.value.length == 0) {
+        emailErrorMsg.innerHTML = "";
+        valueEmail = null;
+        console.log(valueEmail);
+    }
+    // Test message d'erreur
+    else if (e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+        emailErrorMsg.innerHTML = "";
+        valueEmail = e.target.value;
+        console.log(valueEmail);
+    }
+    if (
+        !e.target.value.match(/^[\w-\.]+@([\w-]+\.)[\w-]{2,4}$/) && 
+        !e.target.value.length == 0
+        ) {
+        emailErrorMsg.innerHTML = "Email non valide, ex : toto@yahoo.com";
+        valueEmail = null;
+    }     
+});
+
+
+
+
+
+
+
+
+
+
+
+   
    
     
 
