@@ -3,7 +3,7 @@ const products = JSON.parse(localStorage.getItem("products"));
 
 // Vérification du contenu du panier : si le panier est vide
 if (products === null) {
-    alert("Votre panier est  vide");
+    alert("Votre panier est vide.");
 }
 
 // Si le panier est plein, afficher les produits
@@ -151,6 +151,10 @@ else {
 
             });
 
+            /*La splice()méthode modifie le contenu d'un tableau en supprimant 
+            ou en remplaçant des éléments existants et/ou en ajoutant de nouveaux éléments en place .
+            Pour accéder à une partie d'un tableau sans le modifier, voir slice().*/
+
             result.splice(deleteIndex, 1);
 
             let localStorageCard = JSON.parse(localStorage.getItem("products"));
@@ -196,12 +200,9 @@ else {
             input.closest(".cart__item");
 
             // Mise à jour de la quantité et du prix après changement de quantité
-            totalQuantityNode.textContent = getTotalQuantity(result);
-           // console.log(getTotalQuantity(result));
-
+            totalQuantityNode.textContent = getTotalQuantity(result); 
             totalPriceNode.textContent = getTotalPrice(result); 
-           // console.log(getTotalPrice(result));
-            
+               
         }
         
     });
@@ -209,145 +210,181 @@ else {
 
 
 
-// ************************* Formulaire ********************** 
+// ************************* Formulaire ************************************** 
+
 
 // Création des variables qui vont contenir la saisie de l'utilisateur
-let valueFirstName;
-let valueLastName;
-let valueAddress;
-let valueCity;
-let valueEmail;
+let inputFirstName;
+let inputLastName;
+let inputAddress;
+let inputCity;
+let inputEmail;
 
 
-// Ecoute de l'input du prénom avec une fonction et des conditions
-firstName.addEventListener("input", function (e) {
-    valueFirstName;
-    if(e.target.value.length == 0) {
-        firstNameErrorMsg.innerHTML = "";
-        valueFirstName = null;
-    }
-    // Test 1 Message d'erreur
-    else if(e.target.value.length < 2 || e.target.value.length > 50) {
-        firstNameErrorMsg.innerHTML = "Le prénom doit contenir entre 2 et 50 caractères.";
-        valueFirstName = null;
-    }
-    if(e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/)) {
-        firstNameErrorMsg.innerHTML = "";
-        valueFirstName = e.target.value;    
-    }
-     // Test 2 message d'erreur
-    if (
-        !e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/) &&
-        e.target.value.length > 2 &&
-        e.target.value.length < 50
-    ) {
-        firstNameErrorMsg.innerHTML = "Le prénom ne peut contenir ni caractère spécial ni chiffre.";
-        valueFirstName = null;
-    }    
-});
+// Déclarations des varaibles conteant les RegExp(expressions régulières)
 
-// Ecoute de l'input du nom avec une fonction et des conditions
-lastName.addEventListener("input", function (e) {
-    valueLastName;
-    if (e.target.value.length == 0) {
-        lastNameErrorMsg.innerHTML = "";
-        valueLastName = null;
-    }
-    // Test 1 Message d'erreur
-    else if (e.target.value.length < 2 || e.target.value.length > 50) {
-        lastNameErrorMsg.innerHTML = "Le nom doit contenir entre 2 et 50 caractères.";
-        valueLasttName = null;
-    }
-    if (e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/)) {
-        lastNameErrorMsg.innerHTML = "";
-        valueLastName = e.target.value;
-    }
-    // Test 2 message d'erreur
-    if (
-        !e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/) &&
-        e.target.value.length > 2 &&
-        e.target.value.length < 50
-    ) {
-        lastNameErrorMsg.innerHTML = "Le nom ne peut contenir ni caractère spécial ni chiffre.";
-        valueLastName = null;
-    }
-});
+/*Un objet RegExp est utilisé pour étudier les correspondances d'un texte avec un motif donné.
+//Les expressions rationnelles sont des motifs utilisés pour correspondre à certaines combinaisons de caractères
+ au sein de chaînes de caractères.En JavaScript, les expressions rationnelles sont également des objets.*/
 
-// Ecoute de l'input de l'adresse avec une fonction et des conditions
-address.addEventListener("input", function (e) {
-    valueAddress;
-    if (e.target.value.length == 0) {
-        addressErrorMsg.innerHTML = "";
-        valueAddress = null;
-    }
-    // Test 1 Message d'erreur
-    else if (e.target.value.length < 2 || e.target.value.length > 100) {
-        addressErrorMsg.innerHTML = "L'adresse doit contenir entre 2 et 100 caractères.";
-        valueAddress = null;
-    }
+let textRegex = new RegExp(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/);
+let adressRegex = new RegExp(/^[a-z A-Z 0-9,çéêèàîïëÉÈÊË-]{2,100}$/);
+let emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
 
-    if (e.target.value.match(/^[a-z A-Z 0-9,çéêèàîïëÉÈÊË-]{2,100}$/)) {
-        addressErrorMsg.innerHTML = "";
-        valueAddress = e.target.value;
-    }
-    // Test 2 message d'erreur
-    if (
-        !e.target.value.match(/^[a-z A-Z 0-9,çéêèàîïëÉÈÊË-]{2,100}$/) &&
-        e.target.value.length > 2 &&
-        e.target.value.length < 100
-    ) {
-        addressErrorMsg.innerHTML = "L'adresse ne peut contenir de caractère spécial.";
-        valueAddress = null;
-    }
-});
 
-// Ecoute de l'input de la ville avec une fonction et des conditions
-city.addEventListener("input", function (e) {
-    valueCity;
-    if (e.target.value.length == 0) {
-        cityErrorMsg.innerHTML = "";
-        valueCity = null;
-    }
-    // Test 1 Message d'erreur
-    else if (e.target.value.length < 2 || e.target.value.length > 50) {
-        cityErrorMsg.innerHTML = "La ville doit contenir entre 2 et 50 caractères.";
-        valueCity = null;
-    }
+// Fonction pour la validation du prénom
+const validFirstName = function() {
 
-    if (e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/)) {
-        cityErrorMsg.innerHTML = "";
-        valueCity = e.target.value;
-    }
-    // Test 2 message d'erreur
-    if (
-        !e.target.value.match(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/) &&
-        e.target.value.length > 2 &&
-        e.target.value.length < 50
-    ) {
-        cityErrorMsg.innerHTML = "La ville ne peut contenir ni caractère spécial ni chiffre.";
-        valueLastName = null;
-    }
-});
+    firstName.addEventListener("input", function (e) {
 
-// Ecoute de l'input de l'email avec une fonction et des conditions
-email.addEventListener("input", function (e) {
-    if (e.target.value.length == 0) {
-        emailErrorMsg.innerHTML = "";
-        valueEmail = null;
-    }
-    // Test message d'erreur
-    else if (e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-        emailErrorMsg.innerHTML = "";
-        valueEmail = e.target.value;
-    }
-    if (
-        !e.target.value.match(/^[\w-\.]+@([\w-]+\.)[\w-]{2,4}$/) && 
-        !e.target.value.length == 0
+        if(e.target.value.length == 0) {
+            firstNameErrorMsg.innerHTML = "";
+            inputFirstName = null;
+        }
+        // Test 1 Message d'erreur
+        else if(e.target.value.length < 2 || e.target.value.length > 50) {
+            firstNameErrorMsg.innerHTML = "Le prénom doit contenir entre 2 et 50 caractères.";
+            inputFirstName = null;
+        }
+        if(e.target.value.match(textRegex)) {
+            firstNameErrorMsg.innerHTML = "";
+            inputFirstName = e.target.value;    
+        }
+        // Test 2 message d'erreur
+        if (
+            !e.target.value.match(textRegex) &&
+            e.target.value.length > 2 &&
+            e.target.value.length < 50
         ) {
-        emailErrorMsg.innerHTML = "Email non valide, ex : toto@yahoo.com";
-        valueEmail = null;
-    }     
-});
+            firstNameErrorMsg.innerHTML = "Le prénom ne peut contenir ni caractère spécial ni chiffre.";
+            inputFirstName = null;
+        }    
+    });
+}
+validFirstName();
+
+
+// Fonction pour la validation du nom
+const validLastName = function() {
+
+    lastName.addEventListener("input", function (e) {
+    
+        if (e.target.value.length == 0) {
+            lastNameErrorMsg.innerHTML = "";
+            inputLastName = null;
+        }
+        // Test 1 Message d'erreur
+        else if (e.target.value.length < 2 || e.target.value.length > 50) {
+            lastNameErrorMsg.innerHTML = "Le nom doit contenir entre 2 et 50 caractères.";
+            inputLasttName = null;
+        }
+        if (e.target.value.match(textRegex)) {
+            lastNameErrorMsg.innerHTML = "";
+            inputLastName = e.target.value;
+        }
+        // Test 2 message d'erreur
+        if (
+            !e.target.value.match(textRegex) &&
+            e.target.value.length > 2 &&
+            e.target.value.length < 50
+        ) {
+            lastNameErrorMsg.innerHTML = "Le nom ne peut contenir ni caractère spécial ni chiffre.";
+            inputLastName = null;
+        }
+    });
+}
+validLastName();
+
+
+// Fonction pour la validation de l'adresse
+const validAddress = function() {
+
+    address.addEventListener("input", function (e) {
+    
+        if (e.target.value.length == 0) {
+            addressErrorMsg.innerHTML = "";
+            inputAddress = null;
+        }
+        // Test 1 Message d'erreur
+        else if (e.target.value.length < 2 || e.target.value.length > 100) {
+            addressErrorMsg.innerHTML = "L'adresse doit contenir entre 2 et 100 caractères.";
+            inputAddress = null;
+        }
+
+        if (e.target.value.match(adressRegex)) {
+            addressErrorMsg.innerHTML = "";
+            inputAddress = e.target.value;
+        }
+        // Test 2 message d'erreur
+        if (
+            !e.target.value.match(adressRegex) &&
+            e.target.value.length > 2 &&
+            e.target.value.length < 100
+        ) {
+            addressErrorMsg.innerHTML = "L'adresse ne peut contenir de caractère spécial.";
+            inputAddress = null;
+        }
+    });
+}
+validAddress();
+
+
+// Fonction pour la validation de la ville
+const validCity = function() {
+
+    city.addEventListener("input", function (e) {
+
+        if (e.target.value.length == 0) {
+            cityErrorMsg.innerHTML = "";
+            inputCity = null;
+        }
+        // Test 1 Message d'erreur
+        else if (e.target.value.length < 2 || e.target.value.length > 50) {
+            cityErrorMsg.innerHTML = "La ville doit contenir entre 2 et 50 caractères.";
+            inputCity = null;
+        }
+
+        if (e.target.value.match(textRegex)) {
+            cityErrorMsg.innerHTML = "";
+            inputCity = e.target.value;
+        }
+        // Test 2 message d'erreur
+        if (
+            !e.target.value.match(textRegex) &&
+            e.target.value.length > 2 &&
+            e.target.value.length < 50
+        ) {
+            cityErrorMsg.innerHTML = "La ville ne peut contenir ni caractère spécial ni chiffre.";
+            inputCity = null;
+        }
+    });
+}
+validCity();
+
+
+// Fonction pour la validation de l'email
+const validEmail = function() {
+
+    email.addEventListener("input", function (e) {
+        if (e.target.value.length == 0) {
+            emailErrorMsg.innerHTML = "";
+            inputEmail = null;
+        }
+        // Test message d'erreur
+        else if (e.target.value.match(emailRegex)) {
+            emailErrorMsg.innerHTML = "";
+            inputEmail = e.target.value;
+        }
+        if (
+            !e.target.value.match(emailRegex) && 
+            !e.target.value.length == 0
+            ) {
+            emailErrorMsg.innerHTML = "Email non valide, ex : teresa@yahoo.com";
+            inputEmail = null;
+        }     
+    });
+}
+validEmail();
 
 
 // Ecoute du submit du formulaire
@@ -359,54 +396,43 @@ let orderId = products;
 let orderProducts = JSON.parse(localStorage.getItem("products"));
 let reponseServeur;
 let contact;
+let allProducts = [];
 
-// Fonction pour écouter l'input submit du formulaire
+// Fonction pour valider la commande
 function inputSubmit() {
-    
+
+    // Ecoute du bouton submit
     form.addEventListener("submit", (e) => {
    
         // On stoppe la propagation de l'envoi du formulaire
         e.preventDefault();
 
-        // Récupération de l'id des inputs du formulaire que l'on va stocker dans des constantes
-        const firstName = document.getElementById("firstName");
-        const lastName = document.getElementById("lastName");
-        const address = document.getElementById("address");
-        const city = document.getElementById("city");
-        const email = document.getElementById("email");
-
-        // On stocke la commande et on récupère les produits du local storage
-        let allProducts = [];
-
         // Création d'une variable contenant l'objet contact et products
         const data = {
             contact: {
-                firstName: valueFirstName,
-                lastName: valueLastName,
-                address: valueAddress,
-                city: valueCity,
-                email: valueEmail,
+                firstName: inputFirstName,
+                lastName: inputLastName,
+                address: inputAddress,
+                city: inputCity,
+                email: inputEmail,
             },
             products: allProducts,
         }
-        //console.log(data);
 
         // Vérification des valeurs
-        if (valueFirstName && valueLastName && valueAddress && valueCity && valueEmail) {
+        if (inputFirstName && inputLastName && inputAddress && inputCity && inputEmail) {
             
             // On stocke les produits du local storage
             const orderId = JSON.parse(localStorage.getItem("products"));
-            //console.log(orderId);
 
             for (let i = 0; i < products.length; i++) {
                 allProducts.push(products[i].id);
-                //console.log(allProducts);
             }; 
            
             // Si tous les champs du formulaire sont remplis, envoyez la commande
             inputSubmit();
 
-
+            // Création de la requête fetch pour obtenir le numéro de commande
             fetch('http://localhost:3000/api/products/order', {
                 method: "POST",
                 headers: {
@@ -420,36 +446,28 @@ function inputSubmit() {
                 })
                 .then((promise) => {
                     let reponseServeur = promise;
-                    console.log(reponseServeur);
-                })
 
-                const dataOrderId = {
-                    contact: reponseServeur.contact,
-                    order: reponseServeur.orderId
-                };
-                
+                    const dataOrderId = {
+                        contact: reponseServeur.contact,
+                        order: reponseServeur.orderId
+                    };
 
-                if (orderProducts == null) {
-                    orderProducts = [];
-                    orderProducts.push(dataOrderId);
-                    localStorage.setItem("products", JSON.stringify(data));
-                }
-                else if (orderProducts != null) {
-                    orderProducts.push(orderProducts);
-                    localStorage.setItem("products", JSON.stringify(orderProducts));
-                }
 
-                // Suppression du panier après envoie de la commande
-                localStorage.removeItem("products");
+                    if (orderProducts === null) {
+                        
+                        return false;
+                    }
+                    
 
-                // Redirection vers la page confirmation avec un orderId.
-                document.location.href = `./confirmation.html?orderId=${data}`;
+                    // Redirection vers la page confirmation avec le numéro de commande obtenu
+                    document.location.href = `./confirmation.html?orderId=${dataOrderId.order}`;
+
+                    // Suppression du panier après envoi de la commande
+                    localStorage.removeItem("products");
+                });
+               
             }
-        
-        });
-                /*else {
-                    alert("veuillez remplir tous les champs du formulaire.");
-                }*/
+    });
             
 }
 inputSubmit(); 

@@ -4,7 +4,6 @@ let myId = new URL(document.location.href).searchParams.get("id")
 // Creation des variables. 
 // Elles sont déclarées en dehors pour pouvoir les appeler plus tard si besoin.
 
-// let elementImage = document.querySelector(".item__img");
 let elementName = document.querySelector("#title");
 let elementPrice = document.querySelector("#price");
 let elementDescription = document.querySelector("#description");

@@ -1,5 +1,7 @@
+// Affichage du numéro de commande
+
 const urlSearchParams = new URLSearchParams(window.location.search);
 
-const orderId = urlSearchParams.get("orderId");
-orderId = document.getElementById("orderId");
-orderId.innerHTML = `${orderId}`;
+let orderId = urlSearchParams.get("orderId");
+
+document.getElementById("orderId").innerHTML = `${orderId}`;
