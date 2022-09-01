@@ -214,11 +214,11 @@ else {
 
 
 // Création des variables qui vont contenir la saisie de l'utilisateur
-let inputFirstName;
-let inputLastName;
-let inputAddress;
-let inputCity;
-let inputEmail;
+let valueFirstName;
+let valueLastName;
+let valueAddress;
+let valueCity;
+let valueEmail;
 
 
 // Déclarations des varaibles conteant les RegExp(expressions régulières)
@@ -239,16 +239,16 @@ const validFirstName = function() {
 
         if(e.target.value.length == 0) {
             firstNameErrorMsg.innerHTML = "";
-            inputFirstName = null;
+            valueFirstName = null;
         }
         // Test 1 Message d'erreur
         else if(e.target.value.length < 2 || e.target.value.length > 50) {
             firstNameErrorMsg.innerHTML = "Le prénom doit contenir entre 2 et 50 caractères.";
-            inputFirstName = null;
+            valueFirstName = null;
         }
         if(e.target.value.match(textRegex)) {
             firstNameErrorMsg.innerHTML = "";
-            inputFirstName = e.target.value;    
+            valueFirstName = e.target.value;    
         }
         // Test 2 message d'erreur
         if (
@@ -257,7 +257,7 @@ const validFirstName = function() {
             e.target.value.length < 50
         ) {
             firstNameErrorMsg.innerHTML = "Le prénom ne peut contenir ni caractère spécial ni chiffre.";
-            inputFirstName = null;
+            valueFirstName = null;
         }    
     });
 }
@@ -271,16 +271,16 @@ const validLastName = function() {
     
         if (e.target.value.length == 0) {
             lastNameErrorMsg.innerHTML = "";
-            inputLastName = null;
+            valueLastName = null;
         }
         // Test 1 Message d'erreur
         else if (e.target.value.length < 2 || e.target.value.length > 50) {
             lastNameErrorMsg.innerHTML = "Le nom doit contenir entre 2 et 50 caractères.";
-            inputLasttName = null;
+            valueLasttName = null;
         }
         if (e.target.value.match(textRegex)) {
             lastNameErrorMsg.innerHTML = "";
-            inputLastName = e.target.value;
+            valueLastName = e.target.value;
         }
         // Test 2 message d'erreur
         if (
@@ -289,7 +289,7 @@ const validLastName = function() {
             e.target.value.length < 50
         ) {
             lastNameErrorMsg.innerHTML = "Le nom ne peut contenir ni caractère spécial ni chiffre.";
-            inputLastName = null;
+            valueLastName = null;
         }
     });
 }
@@ -303,17 +303,17 @@ const validAddress = function() {
     
         if (e.target.value.length == 0) {
             addressErrorMsg.innerHTML = "";
-            inputAddress = null;
+            valueAddress = null;
         }
         // Test 1 Message d'erreur
         else if (e.target.value.length < 2 || e.target.value.length > 100) {
             addressErrorMsg.innerHTML = "L'adresse doit contenir entre 2 et 100 caractères.";
-            inputAddress = null;
+            valueAddress = null;
         }
 
         if (e.target.value.match(adressRegex)) {
             addressErrorMsg.innerHTML = "";
-            inputAddress = e.target.value;
+            valueAddress = e.target.value;
         }
         // Test 2 message d'erreur
         if (
@@ -322,7 +322,7 @@ const validAddress = function() {
             e.target.value.length < 100
         ) {
             addressErrorMsg.innerHTML = "L'adresse ne peut contenir de caractère spécial.";
-            inputAddress = null;
+            valueAddress = null;
         }
     });
 }
@@ -336,17 +336,17 @@ const validCity = function() {
 
         if (e.target.value.length == 0) {
             cityErrorMsg.innerHTML = "";
-            inputCity = null;
+            valueCity = null;
         }
         // Test 1 Message d'erreur
         else if (e.target.value.length < 2 || e.target.value.length > 50) {
             cityErrorMsg.innerHTML = "La ville doit contenir entre 2 et 50 caractères.";
-            inputCity = null;
+            valueCity = null;
         }
 
         if (e.target.value.match(textRegex)) {
             cityErrorMsg.innerHTML = "";
-            inputCity = e.target.value;
+            valueCity = e.target.value;
         }
         // Test 2 message d'erreur
         if (
@@ -355,7 +355,7 @@ const validCity = function() {
             e.target.value.length < 50
         ) {
             cityErrorMsg.innerHTML = "La ville ne peut contenir ni caractère spécial ni chiffre.";
-            inputCity = null;
+            valueCity = null;
         }
     });
 }
@@ -368,19 +368,19 @@ const validEmail = function() {
     email.addEventListener("input", function (e) {
         if (e.target.value.length == 0) {
             emailErrorMsg.innerHTML = "";
-            inputEmail = null;
+            valueEmail = null;
         }
         // Test message d'erreur
         else if (e.target.value.match(emailRegex)) {
             emailErrorMsg.innerHTML = "";
-            inputEmail = e.target.value;
+            valueEmail = e.target.value;
         }
         if (
             !e.target.value.match(emailRegex) && 
             !e.target.value.length == 0
             ) {
             emailErrorMsg.innerHTML = "Email non valide, ex : teresa@yahoo.com";
-            inputEmail = null;
+            valueEmail = null;
         }     
     });
 }
@@ -410,17 +410,17 @@ function inputSubmit() {
         // Création d'une variable contenant l'objet contact et products
         const data = {
             contact: {
-                firstName: inputFirstName,
-                lastName: inputLastName,
-                address: inputAddress,
-                city: inputCity,
-                email: inputEmail,
+                firstName: valueFirstName,
+                lastName: valueLastName,
+                address: valueAddress,
+                city: valueCity,
+                email: valueEmail,
             },
             products: allProducts,
         }
 
         // Vérification des valeurs
-        if (inputFirstName && inputLastName && inputAddress && inputCity && inputEmail) {
+        if (valueFirstName && valueLastName && valueAddress && valueCity && valueEmail) {
             
             // On stocke les produits du local storage
             const orderId = JSON.parse(localStorage.getItem("products"));
