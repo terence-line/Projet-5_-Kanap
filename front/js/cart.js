@@ -15,12 +15,12 @@ else {
     sinon, la promesse renvoyée sera tenue avec la valeur.*/
 
     function getPrice(product) {
-    
+
         return new Promise((resolve) => {
 
             fetch(`http://localhost:3000/api/products/${product.id}`).then((response) => {
 
-                 return response.json();
+                return response.json();
 
             }).then((result) => {
 
@@ -47,13 +47,13 @@ else {
 
         const totalQuantityNode = document.querySelector("#totalQuantity");
 
-        const totalPriceNode =  document.querySelector("#totalPrice");
-    
+        const totalPriceNode = document.querySelector("#totalPrice");
+
         let html = "";
 
-        result.forEach((kanap)=>{
-          
-            html+= `
+        result.forEach((kanap) => {
+
+            html += `
 
                 <article class="cart__item" data-id="${kanap.id}" data-color="${kanap.color}">
                     <div class="cart__item__img">
@@ -79,48 +79,48 @@ else {
                 `;
 
         });
-    
+
         // Fonction pour claculer le total des articles contenus dans le panier
-        function getTotalQuantity(arrayOfKanap){
+        function getTotalQuantity(arrayOfKanap) {
 
             let totalQuantity = 0;
 
-            arrayOfKanap.forEach((kanap)=>{
+            arrayOfKanap.forEach((kanap) => {
 
-               totalQuantity = Number(totalQuantity) + Number(kanap.quantity);
+                totalQuantity = Number(totalQuantity) + Number(kanap.quantity);
 
             })
 
-            return  totalQuantity;
+            return totalQuantity;
 
         }
 
         // Fonction pour calculer le prix total du panier
-        function getTotalPrice(arrayOfKanap){
+        function getTotalPrice(arrayOfKanap) {
 
             let totalPrice = 0;
 
-            arrayOfKanap.forEach((kanap)=>{
+            arrayOfKanap.forEach((kanap) => {
 
-                totalPrice= Number(totalPrice) + Number(kanap.price * kanap.quantity); 
+                totalPrice = Number(totalPrice) + Number(kanap.price * kanap.quantity);
 
             })
 
-            return totalPrice; 
+            return totalPrice;
 
         }
 
         document.querySelector("#cart__items").innerHTML = html;
 
         totalQuantityNode.textContent = getTotalQuantity(result);
-    
+
         totalPriceNode.textContent = getTotalPrice(result);
 
         const deleteItems = document.querySelectorAll(".deleteItem");
 
-        deleteItems.forEach((item, indexItem)=>{
+        deleteItems.forEach((item, indexItem) => {
 
-            item.addEventListener("click", ()=>{
+            item.addEventListener("click", () => {
 
                 return deleteItem(item, result[indexItem]);
 
@@ -130,9 +130,9 @@ else {
 
         const itemsQuantity = document.querySelectorAll(".itemQuantity");
 
-        itemsQuantity.forEach((input, indexInput)=>{
+        itemsQuantity.forEach((input, indexInput) => {
 
-            input.addEventListener("input", ()=>{
+            input.addEventListener("input", () => {
 
                 updateQuantity(input, result[indexInput])
 
@@ -141,11 +141,11 @@ else {
         })
 
         // Fonction pour supprimer un article du panier
-        function deleteItem(itemToDelete, product){
+        function deleteItem(itemToDelete, product) {
 
             // On doit trouver l'index de l'élément qu'on veut supprimer dans le tableau de produits issus du localStorage.
 
-            const deleteIndex = result.findIndex((element)=>{
+            const deleteIndex = result.findIndex((element) => {
 
                 return element.color === product.color;
 
@@ -167,22 +167,22 @@ else {
 
             // Mise à jour de la quantité et du prix après suppression d'un produit
             totalQuantityNode.textContent = getTotalQuantity(result);
-    
+
             totalPriceNode.textContent = getTotalPrice(result);
-       
+
         }
-        
+
 
         // Fonction pour modifier la quantité d'un produit
-        function  updateQuantity(input, product){
+        function updateQuantity(input, product) {
 
-            const updateIndex = result.findIndex((element)=>{
+            const updateIndex = result.findIndex((element) => {
 
                 return element.color === product.color;
 
             });
 
-          
+
             let kanapProduct = products[updateIndex];
 
             kanapProduct.quantity = input.value;
@@ -200,18 +200,16 @@ else {
             input.closest(".cart__item");
 
             // Mise à jour de la quantité et du prix après changement de quantité
-            totalQuantityNode.textContent = getTotalQuantity(result); 
-            totalPriceNode.textContent = getTotalPrice(result); 
-               
+            totalQuantityNode.textContent = getTotalQuantity(result);
+            totalPriceNode.textContent = getTotalPrice(result);
+
         }
-        
+
     });
 }
 
 
-
 // ************************* Formulaire ************************************** 
-
 
 // Création des variables qui vont contenir la saisie de l'utilisateur
 let valueFirstName;
@@ -219,7 +217,6 @@ let valueLastName;
 let valueAddress;
 let valueCity;
 let valueEmail;
-
 
 // Déclarations des varaibles conteant les RegExp(expressions régulières)
 
@@ -231,24 +228,23 @@ let textRegex = new RegExp(/^[a-z A-ZçéêèàîïëÉÈÊË-]{2,50}$/);
 let adressRegex = new RegExp(/^[a-z A-Z 0-9,çéêèàîïëÉÈÊË-]{2,100}$/);
 let emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
 
-
 // Fonction pour la validation du prénom
-const validFirstName = function() {
+const validFirstName = function () {
 
     firstName.addEventListener("input", function (e) {
 
-        if(e.target.value.length == 0) {
+        if (e.target.value.length == 0) {
             firstNameErrorMsg.innerHTML = "";
             valueFirstName = null;
         }
         // Test 1 Message d'erreur
-        else if(e.target.value.length < 2 || e.target.value.length > 50) {
+        else if (e.target.value.length < 2 || e.target.value.length > 50) {
             firstNameErrorMsg.innerHTML = "Le prénom doit contenir entre 2 et 50 caractères.";
             valueFirstName = null;
         }
-        if(e.target.value.match(textRegex)) {
+        if (e.target.value.match(textRegex)) {
             firstNameErrorMsg.innerHTML = "";
-            valueFirstName = e.target.value;    
+            valueFirstName = e.target.value;
         }
         // Test 2 message d'erreur
         if (
@@ -258,17 +254,16 @@ const validFirstName = function() {
         ) {
             firstNameErrorMsg.innerHTML = "Le prénom ne peut contenir ni caractère spécial ni chiffre.";
             valueFirstName = null;
-        }    
+        }
     });
 }
 validFirstName();
 
-
 // Fonction pour la validation du nom
-const validLastName = function() {
+const validLastName = function () {
 
     lastName.addEventListener("input", function (e) {
-    
+
         if (e.target.value.length == 0) {
             lastNameErrorMsg.innerHTML = "";
             valueLastName = null;
@@ -295,12 +290,11 @@ const validLastName = function() {
 }
 validLastName();
 
-
 // Fonction pour la validation de l'adresse
-const validAddress = function() {
+const validAddress = function () {
 
     address.addEventListener("input", function (e) {
-    
+
         if (e.target.value.length == 0) {
             addressErrorMsg.innerHTML = "";
             valueAddress = null;
@@ -328,9 +322,8 @@ const validAddress = function() {
 }
 validAddress();
 
-
 // Fonction pour la validation de la ville
-const validCity = function() {
+const validCity = function () {
 
     city.addEventListener("input", function (e) {
 
@@ -361,9 +354,8 @@ const validCity = function() {
 }
 validCity();
 
-
 // Fonction pour la validation de l'email
-const validEmail = function() {
+const validEmail = function () {
 
     email.addEventListener("input", function (e) {
         if (e.target.value.length == 0) {
@@ -376,16 +368,15 @@ const validEmail = function() {
             valueEmail = e.target.value;
         }
         if (
-            !e.target.value.match(emailRegex) && 
+            !e.target.value.match(emailRegex) &&
             !e.target.value.length == 0
-            ) {
+        ) {
             emailErrorMsg.innerHTML = "Email non valide, ex : teresa@yahoo.com";
             valueEmail = null;
-        }     
+        }
     });
 }
 validEmail();
-
 
 // Ecoute du submit du formulaire
 
@@ -403,7 +394,7 @@ function inputSubmit() {
 
     // Ecoute du bouton submit
     form.addEventListener("submit", (e) => {
-   
+
         // On stoppe la propagation de l'envoi du formulaire
         e.preventDefault();
 
@@ -421,14 +412,14 @@ function inputSubmit() {
 
         // Vérification des valeurs
         if (valueFirstName && valueLastName && valueAddress && valueCity && valueEmail) {
-            
+
             // On stocke les produits du local storage
             const orderId = JSON.parse(localStorage.getItem("products"));
 
             for (let i = 0; i < products.length; i++) {
                 allProducts.push(products[i].id);
-            }; 
-           
+            };
+
             // Si tous les champs du formulaire sont remplis, envoyez la commande
             inputSubmit();
 
@@ -440,7 +431,7 @@ function inputSubmit() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data),
-                })
+            })
                 .then((response) => {
                     return response.json();
                 })
@@ -451,13 +442,10 @@ function inputSubmit() {
                         contact: reponseServeur.contact,
                         order: reponseServeur.orderId
                     };
-
-
                     if (orderProducts === null) {
-                        
+
                         return false;
                     }
-                    
 
                     // Redirection vers la page confirmation avec le numéro de commande obtenu
                     document.location.href = `./confirmation.html?orderId=${dataOrderId.order}`;
@@ -465,32 +453,13 @@ function inputSubmit() {
                     // Suppression du panier après envoi de la commande
                     localStorage.removeItem("products");
                 });
-               
-            }
+
+        }
     });
-            
 }
-inputSubmit(); 
-    
+inputSubmit();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-   
     
 
     

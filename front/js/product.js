@@ -1,9 +1,10 @@
-let myId = new URL(document.location.href).searchParams.get("id")
 
+let myId = new URL(document.location.href).searchParams.get("id")
 
 // Creation des variables. 
 // Elles sont déclarées en dehors pour pouvoir les appeler plus tard si besoin.
 
+// let elementImage = document.querySelector(".item__img");
 let elementName = document.querySelector("#title");
 let elementPrice = document.querySelector("#price");
 let elementDescription = document.querySelector("#description");
@@ -13,12 +14,13 @@ afficher_produit();
 
 // création nouvelle adresse fetch + identifiant produit
 function afficher_produit() {
-    fetch('http://localhost:3000/api/products/'+ myId)
+    fetch('http://localhost:3000/api/products/' + myId)
         .then((response) => {
             return response.json();
         })
         .then((resultApi) => {
             // Affichage du produit dans la console.
+            //console.table(resultApi);
 
             let elementImage = document.querySelector(".item__img");
 
@@ -33,7 +35,6 @@ function afficher_produit() {
 
             // insertion prix            
             elementPrice.innerHTML = resultApi.price;
-
 
             // insertion decxription           
             elementDescription.innerHTML = resultApi.description;
@@ -80,39 +81,33 @@ function ajouter_panier() {
             quantity: myQuantityValue,
 
         }
-        
-        // Si aucune couleur et aucune quantité ne sont saisies, afficher un message d'alert.
+
         if (Number(myQuantityValue) <= 0 || myColorValue === "") {
 
             return alert("Veuillez sélectionner une couleur et une quantité.");
         }
 
-        if (Number(myQuantityValue) > 0 && myColorValue != "") {
-
-            return alert("Votre produit a été ajouté au panier.");
-        }
-
-        // Si le local storage est vide, créer un tableau vide et mettre un produit dans le local storage.
         if (tableauLocalStorage === null) {
 
             const kanapsInfos = [];
 
             kanapsInfos.push(product);
-        
+
             return localStorage.setItem("products", JSON.stringify(kanapsInfos));
-            
+
         }
-        
-        /* La methode array.some() renvoit un booléen true/false, si l'assertion entrée est vraie ou fausse,
+        else {
+            alert("Votre produit a été ajouté au panier.")
+        }
+
+        /* La methode array.some() renvoit un booleen true/false, si l'assertion entree est vrai ou fausse,
            on va voir si le produit choisi par l'utilisateur est deja dans le localStorage ou pas.*/
-        
+
         const isInsideLocalStorage = tableauLocalStorage.some((kanap) => {
 
             return kanap.id === myId && kanap.color === myColorValue;
 
         });
-
-        // Si le produit ne se trouve dans le local storage, je le rajoute.
 
         if (isInsideLocalStorage === false) {
 
@@ -121,9 +116,8 @@ function ajouter_panier() {
             return localStorage.setItem("products", JSON.stringify(tableauLocalStorage));
 
         }
+        
 
-        // La méthode map() crée un nouveau tableau avec les résultats de l'appel d'une fonction fournie sur chaque élément du tableau appelant.
-        // Si le produit est identique, j'additionne les quantités.
         const updateTableauLocalStorage = tableauLocalStorage.map((kanap) => {
 
             if (kanap.color === myColorValue) {
@@ -131,18 +125,14 @@ function ajouter_panier() {
                 kanap.quantity = Number(kanap.quantity) + Number(myQuantityValue);
 
             }
-           
-            return kanap;    
-   
+
+            return kanap;
+    
+
         });
 
-        return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));    
-            
-    }   
-    
+        return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));
+    }
 }
-    
-       
-       
-        
-    
+
+
