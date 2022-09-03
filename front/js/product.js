@@ -13,7 +13,7 @@ afficher_produit();
 
 // création nouvelle adresse fetch + identifiant produit
 function afficher_produit() {
-    fetch('http://localhost:3000/api/products/' + myId)
+    fetch('http://localhost:3000/api/products/'+ myId)
         .then((response) => {
             return response.json();
         })
@@ -87,6 +87,11 @@ function ajouter_panier() {
             return alert("Veuillez sélectionner une couleur et une quantité.");
         }
 
+        if (Number(myQuantityValue) > 0 && myColorValue != "") {
+
+            return alert("Votre produit a été ajouté au panier.");
+        }
+
         // Si le local storage est vide, créer un tableau vide et mettre un produit dans le local storage.
         if (tableauLocalStorage === null) {
 
@@ -127,20 +132,13 @@ function ajouter_panier() {
 
             }
            
-
             return kanap;    
    
         });
 
-        if (updateTableauLocalStorage != 0) {
-            alert("Votre produit a été ajouté au panier.")
-        }   
-
         return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));    
-        
-        
-    }
-   
+            
+    }   
     
 }
     
