@@ -126,15 +126,21 @@ function ajouter_panier() {
                 kanap.quantity = Number(kanap.quantity) + Number(myQuantityValue);
 
             }
+           
 
-            return kanap;
-            
+            return kanap;    
    
         });
 
-        return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));
+        if (updateTableauLocalStorage != 0) {
+            alert("Votre produit a été ajouté au panier.")
+        }   
+
+        return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));    
+        
         
     }
+   
     
 }
     
