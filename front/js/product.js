@@ -86,6 +86,10 @@ function ajouter_panier() {
 
             return alert("Veuillez sélectionner une couleur et une quantité.");
         }
+         else {
+
+            alert("Votre produit a été ajouté au panier.")
+        }
 
         if (tableauLocalStorage === null) {
 
@@ -96,9 +100,7 @@ function ajouter_panier() {
             return localStorage.setItem("products", JSON.stringify(kanapsInfos));
 
         }
-        else {
-            alert("Votre produit a été ajouté au panier.")
-        }
+        
 
         /* La methode array.some() renvoit un booleen true/false, si l'assertion entree est vrai ou fausse,
            on va voir si le produit choisi par l'utilisateur est deja dans le localStorage ou pas.*/
